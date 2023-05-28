@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DreamersController {
     @GetMapping("hello")
     public String hello(Model model) {
-        //jenkins push test
+        //jenkins push test2
 
         return "/hello";
     }
