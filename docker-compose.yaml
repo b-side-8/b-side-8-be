@@ -1,0 +1,13 @@
+version: "3"
+services:
+  mariadb:
+    image: mariadb:10.11.2
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=place12!@
+    volumes:
+      - ./db_volumes:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+
