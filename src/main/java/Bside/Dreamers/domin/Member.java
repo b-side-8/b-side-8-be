@@ -26,7 +26,6 @@ public class Member {
     @Column(columnDefinition ="char")
     private String agree_yn;
 
-    private String name;
 
     private String gender;
 
