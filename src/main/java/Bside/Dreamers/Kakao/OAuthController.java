@@ -1,5 +1,6 @@
 package Bside.Dreamers.Kakao;
 
+import Bside.Dreamers.domin.Member;
 import Bside.Dreamers.service.KaKaoUser;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,10 @@ public class OAuthController {
     public void kakaoCallback(@RequestParam String code) throws Exception{
         System.out.println(code);
         String accessToken = oAuthService.getKakaoAccessToken(code);
-        kaKaoUser.createKakaoUser(accessToken);
+        Member member = kaKaoUser.createKakaoUser(accessToken);
+
+        System.out.println(member.getNickname());
+        //회원가입
 
     }
 }

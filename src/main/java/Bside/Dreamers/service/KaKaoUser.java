@@ -1,6 +1,8 @@
 package Bside.Dreamers.service;
 
+import Bside.Dreamers.domin.Member;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,11 @@ import java.net.URL;
 @Service
 public class KaKaoUser {
 
-    public void createKakaoUser(String token) throws Exception {
+    public Member createKakaoUser(String token) throws Exception {
 
         String reqURL = "https://kapi.kakao.com/v2/user/me";
+
+        Member member = new Member();
 
         //access_token을 이용하여 사용자 정보 조회
         try {
@@ -44,21 +48,31 @@ public class KaKaoUser {
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
-            int id = element.getAsJsonObject().get("id").getAsInt();
+            Long id = element.getAsJsonObject().get("id").getAsLong();
+            System.out.println("id : " + id);
+            member.setId(id);
+
+
+            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+
+            String nickName = properties.getAsJsonObject().get("nickname").getAsString();
+            member.setNickname(nickName);
+
+
             /*boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
             String email = "";
             if(hasEmail){
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
             }*/
 
-            System.out.println("id : " + id);
-
-
             br.close();
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return member;
     }
 
 
