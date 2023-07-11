@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_no")
     private Long no;
 
@@ -31,7 +31,7 @@ public class Member {
 
     private String birth;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     private List<Bucket> buckets = new ArrayList<>();
 
 

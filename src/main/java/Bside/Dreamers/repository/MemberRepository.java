@@ -3,9 +3,9 @@ package Bside.Dreamers.repository;
 import Bside.Dreamers.domin.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
@@ -16,6 +16,7 @@ public class MemberRepository {
     private final EntityManager em;
 
 
+    @Transactional
     public void save(Member member) {
         em.persist(member);
     }

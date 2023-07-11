@@ -31,8 +31,8 @@ public class MemberController {
     })
     @PostMapping("/join")
     public void joinMember(@RequestBody Member member) throws Exception{
-        Long id = memberService.join(member);
-        System.out.println("id = "+ id);
+        Long no = memberService.join(member);
+        System.out.println("no = "+ no);
     }
 
 }
