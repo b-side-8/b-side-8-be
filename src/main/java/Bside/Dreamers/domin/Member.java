@@ -1,6 +1,9 @@
 package Bside.Dreamers.domin;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,29 +14,46 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "member_no")
     private Long no;
 
-    private Long id; // 아이디 칼럼 없어서 추가
+    @Column
+    @ApiModelProperty(example = "카카오 ID")
+    private Long id;
 
-    private String nickname;
+    @Column
+    @ApiModelProperty(example = "닉네임")
+    private String nickName;
 
-    private LocalDateTime regist_dt;
+    @Column
+    @ApiModelProperty(example = "가입일시")
+    private LocalDateTime registDt;
 
     @Column(columnDefinition ="char")
-    private String agree_yn;
+    @ApiModelProperty(example = "이용약관동의여부(Y/N)")
+    private String agreeYn;
 
-
+    @Column
+    @ApiModelProperty(example = "성별")
     private String gender;
 
+    @Column
+    @ApiModelProperty(example = "출생연도")
     private String birth;
 
     @OneToMany(mappedBy = "member")
     private List<Bucket> buckets = new ArrayList<>();
 
-
+    @Builder
+    public Member(Long id, String nickName, String agreeYn, String gender, String birth){
+        this.id = id;
+        this.nickName = nickName;
+        this.agreeYn = agreeYn;
+        this.gender = gender;
+        this.birth = birth;
+    }
 
 }
