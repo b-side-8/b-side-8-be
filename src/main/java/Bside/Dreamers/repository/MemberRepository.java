@@ -2,6 +2,7 @@ package Bside.Dreamers.repository;
 
 import Bside.Dreamers.domin.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +18,20 @@ public class MemberRepository {
 
 
     @Transactional
-    public void save(Member member) {
-        em.persist(member);
+    public Member save(Member member) {
+        Member memberInfo = this.findById(member.getId());
+        if(memberInfo == null) {
+            em.persist(member);
+        } else {
+            em.merge(memberInfo);
+        }
+        return member;
     }
 
-    public Member findOne(Long id) {
-        return em.find(Member.class, id);
+    public Member findById(Long id) {
+        return em.createQuery("select m from Member m where m.id = :id", Member.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 
     public List<Member> findAll() {

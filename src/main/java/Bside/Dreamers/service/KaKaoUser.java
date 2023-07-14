@@ -11,15 +11,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 @Service
 public class KaKaoUser {
 
-    public Member createKakaoUser(String token) throws Exception {
+    public HashMap<String, Object> createKakaoUser(String token) throws Exception {
 
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 
-        Member member = new Member();
+        HashMap<String, Object> memberInfo = new HashMap<String, Object>();
 
         //access_token을 이용하여 사용자 정보 조회
         try {
@@ -50,20 +51,21 @@ public class KaKaoUser {
 
             Long id = element.getAsJsonObject().get("id").getAsLong();
             System.out.println("id : " + id);
-            member.setId(id);
-
 
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
             String nickName = properties.getAsJsonObject().get("nickname").getAsString();
-            member.setNickname(nickName);
 
 
-            /*boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
-            String email = "";
+            boolean hasEmail = kakao_account.get("has_email").getAsBoolean();
             if(hasEmail){
-                email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
-            }*/
+                String email = kakao_account.getAsJsonObject().get("email").getAsString();
+                memberInfo.put("email", email);
+            }
+
+            memberInfo.put("id", id);
+            memberInfo.put("nickname", nickName);
 
             br.close();
 
@@ -72,7 +74,7 @@ public class KaKaoUser {
             e.printStackTrace();
         }
 
-        return member;
+        return memberInfo;
     }
 
 

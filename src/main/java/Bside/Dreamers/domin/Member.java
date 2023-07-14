@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class Member {
     private String nickname;
 
     @Column
+    @UpdateTimestamp
     @ApiModelProperty(example = "가입일시")
     private LocalDateTime registDt;
 

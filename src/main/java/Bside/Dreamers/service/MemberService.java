@@ -1,9 +1,12 @@
 package Bside.Dreamers.service;
 
 import Bside.Dreamers.domin.Member;
+import Bside.Dreamers.domin.dto.MemberSignupDTO;
 import Bside.Dreamers.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +25,10 @@ public class MemberService {
      * 회원가입
      */
     @Transactional //읽기 전용x
-    public Long join(Member member) {
-        validateDuplicateMember(member); //중복 회원 검증
-        memberRepository.save(member);
-        return member.getNo();
+    public Member join(MemberSignupDTO memberSignupDTO) {
+        return memberRepository.save(memberSignupDTO.toEntity());
     }
+
 
 
     /**
@@ -47,7 +49,7 @@ public class MemberService {
         return memberRepository.findAll();
     }
     public Member findOne(Long memberId) {
-        return memberRepository.findOne(memberId);
+        return memberRepository.findById(memberId);
     }
 
 
