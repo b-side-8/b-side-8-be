@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class MemberSignupDTO {
 
     private Long id;
-    private String nickName;
+    private String nickname;
     private String agreeYn;
     private String gender;
     private String birth;
@@ -21,7 +21,7 @@ public class MemberSignupDTO {
     public Member toEntity(){
         return Member.builder()
                 .id(id)
-                .nickName(nickName)
+                .nickname(nickname)
                 .agreeYn(agreeYn)
                 .gender(gender)
                 .birth(birth)

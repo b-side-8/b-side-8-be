@@ -26,7 +26,7 @@ public class Member {
 
     @Column
     @ApiModelProperty(example = "닉네임")
-    private String nickName;
+    private String nickname;
 
     @Column
     @ApiModelProperty(example = "가입일시")
@@ -48,9 +48,9 @@ public class Member {
     private List<Bucket> buckets = new ArrayList<>();
 
     @Builder
-    public Member(Long id, String nickName, String agreeYn, String gender, String birth){
+    public Member(Long id, String nickname, String agreeYn, String gender, String birth){
         this.id = id;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.agreeYn = agreeYn;
         this.gender = gender;
         this.birth = birth;
