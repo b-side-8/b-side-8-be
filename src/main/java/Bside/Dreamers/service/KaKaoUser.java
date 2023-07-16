@@ -58,11 +58,11 @@ public class KaKaoUser {
             String nickName = properties.getAsJsonObject().get("nickname").getAsString();
 
 
-            boolean hasEmail = kakao_account.get("has_email").getAsBoolean();
+            /*boolean hasEmail = kakao_account.get("has_email").getAsBoolean();
             if(hasEmail){
                 String email = kakao_account.getAsJsonObject().get("email").getAsString();
                 memberInfo.put("email", email);
-            }
+            }*/
 
             memberInfo.put("id", id);
             memberInfo.put("nickname", nickName);
