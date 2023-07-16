@@ -22,7 +22,7 @@ public class BucketService {
     @Transactional
     public Long order(Long memberId, Long bucketId, int count) {
 //엔티티 조회
-        Member member = memberRepository.findOne(memberId);
+        Member member = memberRepository.findById(memberId);
         Bucket bucket = bucketRepository.findOne(bucketId);
 
         return null;

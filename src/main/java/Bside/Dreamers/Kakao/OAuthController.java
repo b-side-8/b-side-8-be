@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 @RestController
 @AllArgsConstructor
@@ -23,13 +24,13 @@ public class OAuthController {
      */
     @ResponseBody
     @GetMapping("/kakao")
-    public void kakaoCallback(@RequestParam String code) throws Exception{
+    public String kakaoCallback(@RequestParam String code) throws Exception{
         System.out.println(code);
         String accessToken = oAuthService.getKakaoAccessToken(code);
-        Member member = kaKaoUser.createKakaoUser(accessToken);
+        HashMap<String, Object> member = kaKaoUser.createKakaoUser(accessToken);
 
-        System.out.println(member.getNickname());
-        //회원가입
+        System.out.println(member.get("nickname"));
 
+        return (String)member.get("id");
     }
 }

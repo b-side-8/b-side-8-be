@@ -1,8 +1,10 @@
 package Bside.Dreamers.domin;
 
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,7 +37,10 @@ public class Bucket {
     private String title;
     
     private String detail;
-    
+
+    @Column
+    @UpdateTimestamp
+    @ApiModelProperty(example = "등록일시")
     private LocalDateTime regist_dt;
 
     @Column(columnDefinition ="char")

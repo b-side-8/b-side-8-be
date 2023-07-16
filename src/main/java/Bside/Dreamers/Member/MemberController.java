@@ -1,30 +1,34 @@
 package Bside.Dreamers.Member;
 
 import Bside.Dreamers.domin.Member;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import Bside.Dreamers.domin.dto.MemberSignupDTO;
+import Bside.Dreamers.service.MemberService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/member")
 public class MemberController {
 
+    private final MemberService memberService;
+
+    @Autowired
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
     @ApiOperation(value = "회원 정보 저장")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name="nickName", value = "닉네임", required = true, paramType = "query"),
-            @ApiImplicitParam(name="agreeYn", value = "약관동의여부", required = true, paramType = "query"),
-            @ApiImplicitParam(name="gender", value = "성별", required = false, paramType = "query"),
-            @ApiImplicitParam(name="birth", value = "출생연도", required = false, paramType = "query"),
-    })
     @PostMapping("/join")
-    public void joinMember(@RequestBody Member member) throws Exception{
-
-        System.out.println("!!");
-
+    public ResponseEntity<Member> joinMember(@RequestBody MemberSignupDTO memberSignupDTO) throws Exception{
+        Member member = memberService.join(memberSignupDTO);
+        System.out.println("no = "+ member.getNo());
+        return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
 }
