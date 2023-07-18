@@ -1,6 +1,5 @@
 package Bside.Dreamers.service;
 
-import Bside.Dreamers.domin.Member;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
