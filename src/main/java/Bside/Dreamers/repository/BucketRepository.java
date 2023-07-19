@@ -12,9 +12,10 @@ public class BucketRepository {
 
     private final EntityManager em;
 
-    public void save(Bucket bucket) {
+    public void regist(Bucket bucket) {
         em.persist(bucket);
     }
+
     public Bucket findOne(Long no) {
         return em.find(Bucket.class, no);
     }

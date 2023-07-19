@@ -2,6 +2,7 @@ package Bside.Dreamers.service;
 
 import Bside.Dreamers.domin.Bucket;
 import Bside.Dreamers.domin.Member;
+import Bside.Dreamers.domin.dto.BucketRegistDTO;
 import Bside.Dreamers.repository.BucketRepository;
 import Bside.Dreamers.repository.CategoryRepository;
 import Bside.Dreamers.repository.MemberRepository;
@@ -26,6 +27,10 @@ public class BucketService {
         Bucket bucket = bucketRepository.findOne(bucketId);
 
         return null;
+    }
+
+    public void regist(BucketRegistDTO bucketRegistDTO){
+        bucketRepository.regist(bucketRegistDTO.toEntity());
     }
 
 }
