@@ -19,7 +19,7 @@ public class BucketRegistDTO {
 
     private Long memberId;
     private Long categoryId;
-    private Long fileid;
+    private Long fileId;
     private String title;
     private String detail;
     private Date endDt;

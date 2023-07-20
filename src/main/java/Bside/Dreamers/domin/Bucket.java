@@ -20,6 +20,7 @@ public class Bucket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "bucket_no")
     private Long bucketNo;
 
     @ManyToOne(fetch = FetchType.LAZY)

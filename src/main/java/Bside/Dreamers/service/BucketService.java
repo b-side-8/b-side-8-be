@@ -29,6 +29,7 @@ public class BucketService {
         return null;
     }
 
+    @Transactional
     public void registBucket(BucketRegistDTO bucketRegistDTO){
         Member member = memberRepository.findById(bucketRegistDTO.getMemberId());
         if(member == null){

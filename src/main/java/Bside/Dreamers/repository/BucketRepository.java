@@ -13,7 +13,6 @@ public class BucketRepository {
 
     private final EntityManager em;
 
-    @Transactional
     public void regist(Bucket bucket) {
         em.persist(bucket);
     }
