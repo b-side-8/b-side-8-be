@@ -18,11 +18,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class Bucket {
 
-
     @Id
-    @GeneratedValue
-    @Column(name = "bucket_no")
-    private Long no;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long bucketNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")

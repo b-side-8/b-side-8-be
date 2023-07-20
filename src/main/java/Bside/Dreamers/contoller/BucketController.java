@@ -25,7 +25,7 @@ public class BucketController {
     @ApiOperation(value = "버킷 등록")
     @PostMapping("/registBucket")
     public ResponseEntity<BucketRegistDTO> joinMember(@RequestBody BucketRegistDTO bucketRegistDTO) throws Exception{
-
+        bucketService.registBucket(bucketRegistDTO);
         return new ResponseEntity<>(bucketRegistDTO, HttpStatus.OK);
     }
 

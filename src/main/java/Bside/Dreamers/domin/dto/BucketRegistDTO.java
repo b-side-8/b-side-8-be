@@ -17,18 +17,18 @@ import java.util.Date;
 @AllArgsConstructor
 public class BucketRegistDTO {
 
-    private Member member;
-    private Category category;
-    private File file;
+    private Long memberId;
+    private Long categoryId;
+    private Long fileid;
     private String title;
     private String detail;
     private Date endDt;
 
-    public Bucket toEntity(){
+    public Bucket toEntity(Member member, Category category){
         return Bucket.builder()
                 .member(member)
                 .category(category)
-                .file(file)
+//                .file(file)
                 .title(title)
                 .detail(detail)
                 .endDt(endDt)

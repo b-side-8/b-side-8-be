@@ -20,7 +20,8 @@ public class Category {
     private String category_nm;
 
 
-    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY) //mappedBy : Category쪽에서는 객체 관리 불가능
+    //mappedBy : Category쪽에서는 객체 관리 불가능
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Bucket> buckets = new ArrayList<>();
 
 
