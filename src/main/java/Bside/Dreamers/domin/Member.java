@@ -19,7 +19,8 @@ import java.util.List;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long no;
+    @Column(name = "member_no")
+    private Long memberNo;
 
     @Column
     @ApiModelProperty(example = "카카오 ID")
@@ -46,7 +47,7 @@ public class Member {
     @ApiModelProperty(example = "출생연도")
     private String birth;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Bucket> buckets = new ArrayList<>();
 
     @Builder

@@ -23,8 +23,14 @@ public class MemberController {
     @ApiOperation(value = "회원 정보 저장")
     @PostMapping("/join")
     public ResponseEntity<Member> joinMember(@RequestBody MemberSignupDTO memberSignupDTO) throws Exception{
-        Member member = memberService.join(memberSignupDTO);
-        System.out.println("no = "+ member.getNo());
+        Member member = new Member();
+        try{
+            member = memberService.join(memberSignupDTO);
+            System.out.println("no = "+ member.getMemberNo());
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
