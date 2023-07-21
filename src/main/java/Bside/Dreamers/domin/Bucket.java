@@ -2,7 +2,9 @@ package Bside.Dreamers.domin;
 
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,18 +15,17 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Bucket {
 
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "bucket_no")
-    private Long no;
+    private Long bucketNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
     private Member member; //버킷리스트 생성회원
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_no")
@@ -41,16 +42,16 @@ public class Bucket {
     @Column
     @UpdateTimestamp
     @ApiModelProperty(example = "등록일시")
-    private LocalDateTime regist_dt;
+    private LocalDateTime registDt;
 
     @Column(columnDefinition ="char")
-    private String achv_yn;
+    private String achvYn;
 
     @Temporal(TemporalType.DATE)
-    private Date end_dt;
+    private Date endDt;
 
     @Column(columnDefinition ="char")
-    private String del_yn;
+    private String delYn;
 
 
 
@@ -83,16 +84,25 @@ public class Bucket {
 
         bucket.setTitle(title);
         bucket.setDetail(detail);
-        bucket.setRegist_dt(LocalDateTime.now());
-        bucket.setAchv_yn(achv_yn);
-        bucket.setEnd_dt(end_dt);
-        bucket.setDel_yn(del_yn);
+        bucket.setRegistDt(LocalDateTime.now());
+        bucket.setAchvYn(achv_yn);
+        bucket.setEndDt(end_dt);
+        bucket.setDelYn(del_yn);
 
         return bucket;
     }
 
 
 
-//완료
+    @Builder
+    public Bucket(Member member, Category category, File file, String title, String detail, Date endDt){
+        this.member = member;
+        this.category = category;
+        this.file = file;
+        this.title = title;
+        this.detail = detail;
+        this.endDt = endDt;
+
+    }
 
 }

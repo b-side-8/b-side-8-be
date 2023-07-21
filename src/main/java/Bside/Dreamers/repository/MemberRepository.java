@@ -2,12 +2,13 @@ package Bside.Dreamers.repository;
 
 import Bside.Dreamers.domin.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor //생성자 주입
@@ -29,9 +30,18 @@ public class MemberRepository {
     }
 
     public Member findById(Long id) {
-        return em.createQuery("select m from Member m where m.id = :id", Member.class)
-                .setParameter("id", id)
-                .getSingleResult();
+        Optional<Member> member = null;
+        try{
+            member = Optional.ofNullable(
+                    em.createQuery("select m from Member m where m.id = :id", Member.class)
+                            .setParameter("id", id)
+                            .getSingleResult()
+            );
+        }catch (NoResultException e){
+            member = Optional.empty();
+        }finally {
+            return member.orElse(null);
+        }
     }
 
     public List<Member> findAll() {
