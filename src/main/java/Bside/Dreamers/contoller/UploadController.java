@@ -91,7 +91,7 @@ public class UploadController {
         s3.setObjectAcl(bucketName,objectName,CannedAccessControlList.PublicRead);
 
         //이미지 링크 전달
-        return String.valueOf(s3.getUrl(bucketName,multipartFile.getOriginalFilename()));
+        return String.valueOf(s3.getUrl(bucketName,objectName));
     }
 
 
