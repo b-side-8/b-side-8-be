@@ -87,37 +87,8 @@ public class UploadController {
         }
 
 
-        // set bucket ACL
-        try {
-            // get the current ACL
-            AccessControlList accessControlList = s3.getBucketAcl(bucketName);
 
-            // add read permission to anonymous
-            accessControlList.grantPermission(GroupGrantee.AllUsers, Permission.Read);
-
-            s3.setBucketAcl(bucketName, accessControlList);
-        } catch (AmazonS3Exception e) {
-            System.err.println(e.getErrorMessage());
-            System.exit(1);
-        }
-
-        String userId = s3.getS3AccountOwner().getId();
-
-        // set object ACL
-        try {
-            // get the current ACL
-            AccessControlList accessControlList = s3.getObjectAcl(bucketName, objectName);
-
-            // add read permission to user by ID
-            accessControlList.grantPermission(new CanonicalGrantee(userId), Permission.Read);
-
-            s3.setObjectAcl(bucketName, objectName, accessControlList);
-        } catch (AmazonS3Exception e) {
-            e.printStackTrace();
-        } catch(SdkClientException e) {
-            e.printStackTrace();
-        }
-
+        s3.setObjectAcl(bucketName,objectName,CannedAccessControlList.PublicRead);
 
         //이미지 링크 전달
         return String.valueOf(s3.getUrl(bucketName,multipartFile.getOriginalFilename()));
