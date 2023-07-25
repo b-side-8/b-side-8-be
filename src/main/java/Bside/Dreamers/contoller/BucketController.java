@@ -30,8 +30,8 @@ public class BucketController {
 
     @ApiOperation(value = "회원별 버킷 목록")
     @GetMapping("/bucketList")
-    public ResponseEntity<List> bucketList(@RequestParam("id") Long id) throws Exception{
-        List bucketList = bucketService.findBucketByMemberId(id);
+    public ResponseEntity<List> bucketList(@RequestParam("memberNo") Long memberNo) throws Exception{
+        List bucketList = bucketService.findBucketByMemberNo(memberNo);
         return ResponseEntity.ok(bucketList);
     }
 }

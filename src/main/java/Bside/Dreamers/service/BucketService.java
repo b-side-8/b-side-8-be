@@ -4,6 +4,7 @@ import Bside.Dreamers.domin.Bucket;
 import Bside.Dreamers.domin.Category;
 import Bside.Dreamers.domin.Member;
 import Bside.Dreamers.domin.dto.BucketRegistDTO;
+import Bside.Dreamers.domin.dto.BucketResponseDTO;
 import Bside.Dreamers.repository.BucketRepository;
 import Bside.Dreamers.repository.CategoryRepository;
 import Bside.Dreamers.repository.MemberRepository;
@@ -48,8 +49,8 @@ public class BucketService {
     }
 
     @Transactional
-    public List<Bucket> findBucketByMemberId(Long id){
-        return bucketRepository.findBucketByMemberId(id);
+    public List<BucketResponseDTO> findBucketByMemberNo(Long memberNo){
+        return bucketRepository.findBucketByMemberNo(memberNo);
     }
 
 }
