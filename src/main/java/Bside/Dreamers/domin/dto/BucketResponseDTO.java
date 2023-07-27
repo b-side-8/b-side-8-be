@@ -15,6 +15,7 @@ import java.util.Date;
 @Builder
 public class BucketResponseDTO {
 
+    private Long bucketNo;
     private Long memberId;
     private Long categoryId;
     private Long fileId;

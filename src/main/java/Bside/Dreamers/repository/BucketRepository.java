@@ -31,6 +31,7 @@ public class BucketRepository {
 
          for(Bucket bucket : bucketList){
              BucketResponseDTO dto = BucketResponseDTO.builder()
+                     .bucketNo(bucket.getBucketNo())
                      .title(bucket.getTitle())
                      .detail(bucket.getDetail())
                      .endDt(bucket.getEndDt())
