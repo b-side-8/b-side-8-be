@@ -1,14 +1,18 @@
 package Bside.Dreamers.service;
 
+import Bside.Dreamers.domin.Bucket;
 import Bside.Dreamers.domin.Category;
 import Bside.Dreamers.domin.Member;
 import Bside.Dreamers.domin.dto.BucketRegistDTO;
+import Bside.Dreamers.domin.dto.BucketResponseDTO;
 import Bside.Dreamers.repository.BucketRepository;
 import Bside.Dreamers.repository.CategoryRepository;
 import Bside.Dreamers.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -42,6 +46,16 @@ public class BucketService {
 
 
         bucketRepository.regist(bucketRegistDTO.toEntity(member, category));
+    }
+
+    @Transactional
+    public List<BucketResponseDTO> findBucketByMemberNo(Long memberNo){
+        return bucketRepository.findBucketByMemberNo(memberNo);
+    }
+
+    @Transactional
+    public BucketResponseDTO viewBucket(Long bucketNo){
+        return bucketRepository.findBucketByBucketNo(bucketNo);
     }
 
 }

@@ -5,6 +5,7 @@ import Bside.Dreamers.domin.Category;
 import Bside.Dreamers.domin.Member;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -12,14 +13,17 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BucketRegistDTO {
+public class BucketResponseDTO {
 
+    private Long bucketNo;
     private Long memberId;
     private Long categoryId;
     private Long fileId;
     private String title;
     private String detail;
     private Date endDt;
+    private LocalDateTime registDt;
+    private String achvYn;
 
     public Bucket toEntity(Member member, Category category){
         return Bucket.builder()
