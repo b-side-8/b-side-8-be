@@ -60,7 +60,9 @@ public class UploadController {
 
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam("id") Long id) throws IOException {
+
+        String fileNm=String.valueOf(id);
 
         //파일이동
        uploadService.uploadFile(multipartFile);
@@ -74,7 +76,7 @@ public class UploadController {
         String bucketName = "bucket-storage";
 
         // 서버로 파일 업로드
-        String objectName = multipartFile.getOriginalFilename();
+        String objectName = fileNm;
         String filePath = "C:\\upload\\"+multipartFile.getOriginalFilename();
 
         try {
