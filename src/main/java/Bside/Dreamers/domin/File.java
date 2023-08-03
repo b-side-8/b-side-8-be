@@ -2,8 +2,11 @@ package Bside.Dreamers.domin;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class File {
 
     @Id
@@ -32,13 +36,15 @@ public class File {
     private String file_extsn;
 
     @Comment("파일 사이즈")
-    private long file_size;
+    private Long file_size;
 
     @Comment("삭제여부")
     @Column(columnDefinition ="char")
     private String del_yn;
 
     @Comment("등록 일시")
+    @UpdateTimestamp
+    @CreatedDate
     private LocalDateTime regist_dt;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -46,19 +52,19 @@ public class File {
     private Bucket bucket;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
-    private Bucket member_no;
+    @JoinColumn(name = "id")
+    private Member membr;
 
 
     @Builder
-    public File(Long id, String file_stre_cours, String originial_file_nm, String file_extsn, long file_size, String del_yn, LocalDateTime regist_dt) {
+    public File(Long id, String file_stre_cours,String stre_file_name, String originial_file_nm, String file_extsn, Long file_size, String del_yn) {
         this.id = id;
         this.file_stre_cours = file_stre_cours;
+        this.stre_file_name = stre_file_name;
         this.originial_file_nm = originial_file_nm;
         this.file_extsn = file_extsn;
         this.file_size = file_size;
         this.del_yn = del_yn;
-        this.regist_dt = regist_dt;
     }
 
 }

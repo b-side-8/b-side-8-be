@@ -3,22 +3,16 @@ package Bside.Dreamers.contoller;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+
 
 import Bside.Dreamers.service.UploadService;
 import com.amazonaws.SdkClientException;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
+
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,10 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+
 @Log4j
 @RestController
 public class UploadController {
@@ -62,10 +54,12 @@ public class UploadController {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam("id") Long id) throws IOException {
 
+        String serverPath="";
+        Long fileSize=null;
         String fileNm=String.valueOf(id);
 
         //파일이동
-       uploadService.uploadFile(multipartFile);
+       uploadService.moveFile(multipartFile);
 
         // S3 client
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
@@ -88,12 +82,15 @@ public class UploadController {
             e.printStackTrace();
         }
 
-
-
         s3.setObjectAcl(bucketName,objectName,CannedAccessControlList.PublicRead);
 
+        serverPath=String.valueOf(s3.getUrl(bucketName,objectName));
+        fileSize= (multipartFile.getSize()) / 1024;
+
+        uploadService.insertMemFile(filePath, serverPath, fileSize, id);
+
         //이미지 링크 전달
-        return String.valueOf(s3.getUrl(bucketName,objectName));
+        return serverPath;
     }
 
 
