@@ -1,5 +1,7 @@
 package Bside.Dreamers.contoller;
 
+import Bside.Dreamers.domin.Member;
+import Bside.Dreamers.service.MemberService;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
@@ -34,6 +36,9 @@ public class UploadController {
     @Resource(name = "uploadService")
     private UploadService uploadService;
 
+    @Resource(name = "memberService")
+    private MemberService memberService;
+
 
     @GetMapping("/listselect")
     public void uploadFile() throws IOException {
@@ -57,6 +62,8 @@ public class UploadController {
         String serverPath="";
         Long fileSize=null;
         String fileNm=String.valueOf(id);
+
+        Member mem = memberService.getMemberInfo(id);
 
         //파일이동
        uploadService.moveFile(multipartFile);
@@ -87,7 +94,7 @@ public class UploadController {
         serverPath=String.valueOf(s3.getUrl(bucketName,objectName));
         fileSize= (multipartFile.getSize()) / 1024;
 
-        uploadService.insertMemFile(filePath, serverPath, fileSize, id);
+        uploadService.insertMemFile(filePath, serverPath, fileSize, mem);
 
         //이미지 링크 전달
         return serverPath;

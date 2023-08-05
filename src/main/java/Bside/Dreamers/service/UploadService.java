@@ -1,4 +1,5 @@
 package Bside.Dreamers.service;
+import Bside.Dreamers.domin.Member;
 import Bside.Dreamers.domin.dto.FileSignupDTO;
 import Bside.Dreamers.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +62,7 @@ public class UploadService {
     /**
      * 회원 사진 업로드
      * */
-    public void insertMemFile(String filePath,String serverPath,Long fileSize,long id) {
+    public void insertMemFile(String filePath, String serverPath, Long fileSize, Member mem) {
 
         String originalFileName =  serverPath.substring(serverPath.lastIndexOf("/")+1);    //오리지날 파일명
         String extension = filePath.substring(filePath.lastIndexOf(".")+1);    //파일 확장자
@@ -76,6 +77,7 @@ public class UploadService {
                 .file_extsn(extension)
                 .file_size(fileSize)
                 .del_yn("N")
+                .membr(mem)
                 .build();
 
 

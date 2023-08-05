@@ -57,7 +57,7 @@ public class File {
 
 
     @Builder
-    public File(Long id, String file_stre_cours,String stre_file_name, String originial_file_nm, String file_extsn, Long file_size, String del_yn) {
+    public File(Long id, String file_stre_cours,String stre_file_name, String originial_file_nm, String file_extsn, Long file_size, String del_yn, Member membr) {
         this.id = id;
         this.file_stre_cours = file_stre_cours;
         this.stre_file_name = stre_file_name;
@@ -65,6 +65,7 @@ public class File {
         this.file_extsn = file_extsn;
         this.file_size = file_size;
         this.del_yn = del_yn;
+        this.membr = membr;
     }
 
 }
