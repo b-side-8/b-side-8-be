@@ -27,7 +27,23 @@ Hello
     <input type="submit" value="Upload">
 </form>
 
-<a href="/listselect">리스트보기</a>
+<!--카카오 id를 넘겨줘야됨-->
+<a href="/listselect?id=60606">리스트보기</a>
+
+
+
+
+<form action="post_submit.jsp" method="post">
+    <p>
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" required>
+    </p>
+    <p>
+        <label for="content">내용:</label>
+        <textarea id="content" name="content" rows="5" required></textarea>
+    </p>
+    <input type="submit" value="등록">
+</form>
 
 
 </body>

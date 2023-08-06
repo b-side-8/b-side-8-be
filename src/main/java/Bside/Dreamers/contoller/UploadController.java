@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.*;
-import java.util.List;
+import java.net.URI;
 
 @Log4j
 @RestController
@@ -41,8 +41,7 @@ public class UploadController {
 
 
     @GetMapping("/listselect")
-    public void uploadFile() throws IOException {
-
+    public String uploadFile(@RequestParam("id") Long id) throws IOException {
 
         // S3 client
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
@@ -50,8 +49,19 @@ public class UploadController {
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
                 .build();
 
+        String bucketName = "bucket-storage";
 
-        List<Bucket> buckets = s3.listBuckets();
+        // one in the bucket
+        URI s3Object = null;
+        try {
+
+            s3Object = s3.getObject(bucketName, String.valueOf(id)).getObjectContent().getHttpRequest().getURI();
+            System.out.println("Object List : " + s3Object );
+        } catch (AmazonS3Exception e) {
+            System.err.println(e.getErrorMessage());
+            System.exit(1);
+        }
+        return String.valueOf(s3Object);
     }
 
 
