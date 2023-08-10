@@ -70,7 +70,7 @@ public class Bucket {
 
     public void setFile(File file) {
         this.file = file;
-        file.setBucket(this);
+        //file.setBucket(this);
     }
 
 

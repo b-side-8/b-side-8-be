@@ -1,6 +1,8 @@
 package Bside.Dreamers.contoller;
 
 import Bside.Dreamers.domin.Member;
+import Bside.Dreamers.domin.dto.BucketResponseDTO;
+import Bside.Dreamers.service.BucketService;
 import Bside.Dreamers.service.MemberService;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.*;
 import java.net.URI;
+import java.util.List;
 
 @Log4j
 @RestController
@@ -39,8 +42,10 @@ public class UploadController {
     @Resource(name = "memberService")
     private MemberService memberService;
 
+    @Resource(name = "bucketService")
+    private BucketService bucketService;
 
-    @GetMapping("/listselect")
+    @GetMapping("/fileSelect")
     public String uploadFile(@RequestParam("id") Long id) throws IOException {
 
         // S3 client
@@ -54,7 +59,6 @@ public class UploadController {
         // one in the bucket
         URI s3Object = null;
         try {
-
             s3Object = s3.getObject(bucketName, String.valueOf(id)).getObjectContent().getHttpRequest().getURI();
             System.out.println("Object List : " + s3Object );
         } catch (AmazonS3Exception e) {
@@ -67,13 +71,19 @@ public class UploadController {
 
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam("id") Long id) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam("id") Long id,@RequestParam("saveType") String saveType) throws IOException {
 
-        String serverPath="";
-        Long fileSize=null;
-        String fileNm=String.valueOf(id);
+        String serverPath = "";
+        Long fileSize = null;
+        String fileNm="";
+        if (saveType.equals("memberSave")) {
+            fileNm = "M_" + id;
+        } else if (saveType.equals("bucketSave")){
+            List<BucketResponseDTO> buckList = bucketService.findBucketByMemberNo(id); //여기서부터 버킷NO 칼컴의 데이터를 조회해야되는데 SIZE만 조회됨,,,!
+            int buckListSize = buckList.size();
+            fileNm = "B_" + id + "_" + buckListSize  ;
+        }
 
-        Member mem = memberService.getMemberInfo(id);
 
         //파일이동
        uploadService.moveFile(multipartFile);
@@ -104,7 +114,8 @@ public class UploadController {
         serverPath=String.valueOf(s3.getUrl(bucketName,objectName));
         fileSize= (multipartFile.getSize()) / 1024;
 
-        uploadService.insertMemFile(filePath, serverPath, fileSize, mem);
+        uploadService.insertFile(filePath, serverPath, fileSize);
+
 
         //이미지 링크 전달
         return serverPath;

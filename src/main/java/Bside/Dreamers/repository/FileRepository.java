@@ -14,12 +14,11 @@ public class FileRepository {
 
     private final EntityManager em;
 
-    public File findOne(String originial_file_nm, Long mem_id) {
+    public File findOne(String originial_file_nm) {
         File file = null;
         try{
-            file = em.createQuery("select f from File f where f.originial_file_nm = :originial_file_nm and f.membr.memberNo = :mem_id", File.class)
+            file = em.createQuery("select f from File f where f.originial_file_nm = :originial_file_nm", File.class)
                     .setParameter("originial_file_nm", originial_file_nm)
-                    .setParameter("mem_id", mem_id)
                     .getSingleResult();
         }catch (NoResultException e){
             return null;
@@ -30,7 +29,7 @@ public class FileRepository {
 
     @Transactional
     public File save(File file){
-        File fileOne = this.findOne(file.getOriginial_file_nm(),file.getMembr().getMemberNo());
+        File fileOne = this.findOne(file.getOriginial_file_nm());
         if (fileOne == null) {
             em.persist(file);
         } else {

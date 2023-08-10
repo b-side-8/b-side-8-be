@@ -62,7 +62,7 @@ public class UploadService {
     /**
      * 회원 사진 업로드
      * */
-    public void insertMemFile(String filePath, String serverPath, Long fileSize, Member mem) {
+    public void insertFile(String filePath, String serverPath, Long fileSize) {
 
         String originalFileName =  serverPath.substring(serverPath.lastIndexOf("/")+1);    //오리지날 파일명
         String extension = filePath.substring(filePath.lastIndexOf(".")+1);    //파일 확장자
@@ -77,25 +77,20 @@ public class UploadService {
                 .file_extsn(extension)
                 .file_size(fileSize)
                 .del_yn("N")
-                .membr(mem)
                 .build();
 
 
         //파일 insert
         Bside.Dreamers.domin.File file2 = fileDTO.toEntity() ;
-        Long fileId = insertFile(file2);
-        log.info("fileId={}", fileId);
+        String resultPath = insertFile(file2);
+        log.info("fileId={}", resultPath);
 
     }
 
     /** 파일 저장 db */
     @Transactional
-    public Long insertFile(Bside.Dreamers.domin.File file) {
-        return fileRepository.save(file).getId();
+    public String insertFile(Bside.Dreamers.domin.File file) {
+        return fileRepository.save(file).getFile_stre_cours();
     }
 
-    /*@Transactional
-    public Long insertBoardFile(Member member) {
-        return MemberRepository.save(member).getId();
-    }*/
 }

@@ -47,7 +47,8 @@ public class Member {
     @ApiModelProperty(example = "출생연도")
     private String birth;
 
-    @OneToOne(mappedBy = "membr",fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_id")
     private File file;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
