@@ -31,6 +31,7 @@ public class BucketRepository {
 
          for(Bucket bucket : bucketList){
              BucketResponseDTO dto = BucketResponseDTO.builder()
+                     .bucketNo(bucket.getBucketNo())
                      .title(bucket.getTitle())
                      .detail(bucket.getDetail())
                      .endDt(bucket.getEndDt())
@@ -44,6 +45,22 @@ public class BucketRepository {
          }
 
          return bucketDtoList;
+    }
+
+    public BucketResponseDTO findBucketByBucketNo(Long bucketNo){
+        Bucket bucket = em.find(Bucket.class, bucketNo);
+
+        BucketResponseDTO dto = BucketResponseDTO.builder()
+                .title(bucket.getTitle())
+                .detail(bucket.getDetail())
+                .endDt(bucket.getEndDt())
+                .registDt(bucket.getRegistDt())
+                .achvYn(bucket.getAchvYn())
+                .memberId(bucket.getMember().getId())
+                .categoryId(bucket.getCategory().getNo())
+                .build();
+
+        return dto;
     }
 
 

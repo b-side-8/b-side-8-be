@@ -53,4 +53,9 @@ public class BucketService {
         return bucketRepository.findBucketByMemberNo(memberNo);
     }
 
+    @Transactional
+    public BucketResponseDTO viewBucket(Long bucketNo){
+        return bucketRepository.findBucketByBucketNo(bucketNo);
+    }
+
 }

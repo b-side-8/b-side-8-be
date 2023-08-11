@@ -1,6 +1,7 @@
 package Bside.Dreamers.contoller;
 
 import Bside.Dreamers.domin.dto.BucketRegistDTO;
+import Bside.Dreamers.domin.dto.BucketResponseDTO;
 import Bside.Dreamers.service.BucketService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,12 @@ public class BucketController {
     public ResponseEntity<List> bucketList(@RequestParam("memberNo") Long memberNo) throws Exception{
         List bucketList = bucketService.findBucketByMemberNo(memberNo);
         return ResponseEntity.ok(bucketList);
+    }
+
+    @ApiOperation(value = "버킷 조회")
+    @GetMapping("/viewBucket")
+    public ResponseEntity<BucketResponseDTO> viewBucket(@RequestParam("bucketNo") Long bucketNo) throws Exception{
+        BucketResponseDTO bucketResponseDTO = bucketService.viewBucket(bucketNo);
+        return new ResponseEntity<>(bucketResponseDTO, HttpStatus.OK);
     }
 }
