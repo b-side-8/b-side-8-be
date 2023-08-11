@@ -14,7 +14,16 @@ spring:
       hibernate:
         # show_sql: true
         format_sql: true
+  jwt:
+    header: Authorization
+    secret: BucketSecretKey20230428BucketSecretKey20230428BucketSecretKey20230428
+    token:
+      access-expiration-time: 43200000    # 12시간
+      refresh-expiration-time: 604800000   # 7일
+
 logging.level:
   org.hibernate.SQL: debug
+
+
 # org.hibernate.type: trace #스프링 부트 2.x, hibernate5
 # org.hibernate.orm.jdbc.bind: trace #스프링 부트 3.x, hibernate6

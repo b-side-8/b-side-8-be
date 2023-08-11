@@ -12,10 +12,12 @@ import java.net.URL;
 @Service
 @Slf4j
 public class OAuthService {
-    public String getKakaoAccessToken (String code) throws Exception{
+    public TokenDto getKakaoAccessToken (String code) throws Exception{
         String access_Token = "";
         String refresh_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
+
+        TokenDto tokenDto = TokenDto.builder().build();
 
         try {
             URL url = new URL(reqURL);
@@ -61,12 +63,15 @@ public class OAuthService {
             System.out.println("access_token : " + access_Token);
             System.out.println("refresh_token : " + refresh_Token);
 
+            tokenDto.setAccessToken(access_Token);
+            tokenDto.setRefreshToken(refresh_Token);
+
             br.close();
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return access_Token;
+        return tokenDto;
     }
 }
