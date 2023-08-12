@@ -46,7 +46,19 @@ public class UploadController {
     private BucketService bucketService;
 
     @GetMapping("/fileSelect")
-    public String uploadFile(@RequestParam("id") Long id) throws IOException {
+    public String uploadFile(@RequestParam("saveType") String saveType, @RequestParam("id") Long id, @RequestParam("bucket_no") Long bucket_no) throws IOException {
+
+        Member mem = null;
+        BucketResponseDTO buck = null ;
+        String fileNm="";
+
+        if (saveType.equals("memberSave")) {
+            mem = memberService.getMemberInfo(id);
+            fileNm = mem.getFile().getOriginial_file_nm();
+        }else if (saveType.equals("bucketSave")){
+            buck = bucketService.viewBucket(bucket_no);
+            fileNm = uploadService.findOneName(buck.getFileId()).getOriginial_file_nm();
+        }
 
         // S3 client
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
@@ -59,7 +71,7 @@ public class UploadController {
         // one in the bucket
         URI s3Object = null;
         try {
-            s3Object = s3.getObject(bucketName, String.valueOf(id)).getObjectContent().getHttpRequest().getURI();
+            s3Object = s3.getObject(bucketName, fileNm).getObjectContent().getHttpRequest().getURI();
             System.out.println("Object List : " + s3Object );
         } catch (AmazonS3Exception e) {
             System.err.println(e.getErrorMessage());

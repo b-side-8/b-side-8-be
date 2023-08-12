@@ -58,6 +58,7 @@ public class BucketRepository {
                 .achvYn(bucket.getAchvYn())
                 .memberId(bucket.getMember().getId())
                 .categoryId(bucket.getCategory().getNo())
+                .fileId(bucket.getFile().getId())
                 .build();
 
         return dto;

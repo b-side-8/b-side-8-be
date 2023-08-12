@@ -93,4 +93,8 @@ public class UploadService {
         return fileRepository.save(file).getFile_stre_cours();
     }
 
+    public Bside.Dreamers.domin.File findOneName(Long fileId){
+        return fileRepository.findOneName(fileId);
+    }
+
 }

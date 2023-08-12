@@ -38,4 +38,18 @@ public class FileRepository {
         return file;
     }
 
+
+    public File findOneName(Long fileId) {
+        File file = null;
+        try{
+            file = em.createQuery("select f from File f where f.id = :file_id", File.class)
+                    .setParameter("file_id", fileId)
+                    .getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }finally {
+            return file;
+        }
+    }
+
 }
