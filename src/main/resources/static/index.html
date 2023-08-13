@@ -17,16 +17,16 @@ Hello
 <br>
 <br>
 <br>
-<h1>File Upload</h1>
+<!--<h1>File Upload</h1>
 <form action="/upload" method="post" enctype="multipart/form-data">
-    <!--멤버아이디 까지 넘어감-->
+    &lt;!&ndash;멤버아이디 까지 넘어감&ndash;&gt;
     <input type="hidden" name="id" value="1">
     <input type="hidden" name="saveType" value="memberSave">
     <input type="file" name="file" required>
 
     <br><br>
     <input type="submit" value="Upload">
-</form>
+</form>-->
 
 <!--카카오 id(mem테이블 id)를 넘겨줘야됨-->
 <a href="/fileSelect?saveType=memberSave&id=60606&bucket_no=0">회원 프로필 보기</a>
@@ -45,6 +45,13 @@ Hello
     <br><br>
     <input type="submit" value="Upload">
 </form>-->
+
+
+<form action="/category/RandomSpin" method="post">
+    <input type="text" name="num">
+    <button type="submit">Submit</button>
+</form>
+
 
 
 </body>
