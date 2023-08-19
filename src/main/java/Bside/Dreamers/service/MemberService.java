@@ -56,5 +56,11 @@ public class MemberService {
         return memberRepository.findById(memberId);
     }
 
+    /***
+     * 회원 정보 수정
+     */
+    public int updateMemberInfo(Long memberId, Long fileId) {
+        return memberRepository.updateById(memberId, fileId);
+    }
 
 }

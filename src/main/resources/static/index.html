@@ -20,7 +20,7 @@ Hello
 <!--<h1>File Upload</h1>
 <form action="/upload" method="post" enctype="multipart/form-data">
     &lt;!&ndash;멤버아이디 까지 넘어감&ndash;&gt;
-    <input type="hidden" name="id" value="1">
+    <input type="hidden" name="id" value="51">
     <input type="hidden" name="saveType" value="memberSave">
     <input type="file" name="file" required>
 
@@ -46,11 +46,45 @@ Hello
     <input type="submit" value="Upload">
 </form>-->
 
+<form id="joinForm">
+    <input type="text" id="nickname" name="nickname" placeholder="Nickname">
+    <input type="text" id="agreeYn" name="agreeYn" placeholder="Agree Y/N">
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
 
-<form action="/category/RandomSpin" method="post">
+<script>
+    function submitForm() {
+        var nickname = document.getElementById("nickname").value;
+        var agreeYn = document.getElementById("agreeYn").value;
+
+        var formData = {
+            nickname: nickname,
+            agreeYn: agreeYn
+        };
+
+        fetch('/member/join', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // 서버의 응답 데이터 출력
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+
+
+<!--<form action="/category/RandomSpin" method="post">
     <input type="text" name="num">
     <button type="submit">Submit</button>
-</form>
+</form>-->
 
 
 

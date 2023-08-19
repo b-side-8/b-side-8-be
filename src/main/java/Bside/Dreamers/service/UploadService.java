@@ -97,4 +97,7 @@ public class UploadService {
         return fileRepository.findOneName(fileId);
     }
 
+    public Bside.Dreamers.domin.File findOneId(String fileNm){
+        return fileRepository.findOneId(fileNm);
+    }
 }

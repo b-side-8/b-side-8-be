@@ -47,7 +47,7 @@ public class Member {
     @ApiModelProperty(example = "출생연도")
     private String birth;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")
     private File file;
 

@@ -52,4 +52,18 @@ public class FileRepository {
         }
     }
 
+
+    public File findOneId(String fileNm) {
+        File file = null;
+        try{
+            file = em.createQuery("select f from File f where f.originial_file_nm = :fileNm", File.class)
+                    .setParameter("fileNm", fileNm)
+                    .getSingleResult();
+        }catch (NoResultException e){
+            return null;
+        }finally {
+            return file;
+        }
+    }
+
 }

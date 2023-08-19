@@ -10,15 +10,26 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@SequenceGenerator(
+        name="FILE_SEQ_GEN", //시퀀스 제너레이터 이름
+        sequenceName="FILE_SEQ", //시퀀스 이름
+        initialValue=1, //시작값
+        allocationSize=1 //메모리를 통해 할당할 범위 사이즈
+        )
 public class File {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy=GenerationType.SEQUENCE, //사용할 전략을 시퀀스로  선택
+            generator="FILE_SEQ_GEN" //식별자 생성기를 설정해놓은  USER_SEQ_GEN으로 설정
+    )
     @Comment("파일아이디")
     @Column(name = "file_id")
     private Long id;
@@ -47,11 +58,11 @@ public class File {
     @CreatedDate
     private LocalDateTime regist_dt;
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "file",cascade = CascadeType.ALL)
-    private Bucket bucket = new Bucket();
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "file",cascade = CascadeType.ALL)
+    private List<Bucket> buckets = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "file")
-    private Member members = new Member();
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "file")
+    private List<Member> members = new ArrayList<>();
 
 
     @Builder

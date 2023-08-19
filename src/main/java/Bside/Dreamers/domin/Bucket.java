@@ -31,7 +31,7 @@ public class Bucket {
     @JoinColumn(name = "category_no")
     private Category category;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id")
     private File file;
     

@@ -44,6 +44,22 @@ public class MemberRepository {
         }
     }
 
+
+    public int updateById(Long id,Long fileId) {
+        int updatedCount=0;
+        try{
+            updatedCount = em.createQuery("UPDATE Member m SET m.file.id = :file_id WHERE m.memberNo = :id")
+                    .setParameter("file_id", fileId)
+                    .setParameter("id", id)
+                    .executeUpdate();
+        }catch (NoResultException e){
+
+            e.printStackTrace();
+        }finally {
+            return updatedCount;
+        }
+    }
+
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
